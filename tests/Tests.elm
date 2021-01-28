@@ -1,14 +1,14 @@
 module Tests exposing (..)
 
 import Dict
-import Test exposing (..)
+import ExampleStuff
 import Expect
 import String
+import Test exposing (..)
 import Xml exposing (..)
-import Xml.Encode exposing (..)
 import Xml.Decode exposing (..)
-import Xml.Query exposing (tags, contains)
-import ExampleStuff
+import Xml.Encode exposing (..)
+import Xml.Query exposing (contains, tags)
 
 
 example : Value
@@ -113,10 +113,16 @@ nestedExample =
           , Dict.empty
           , object
                 [ ( "name", Dict.empty, string "noah" )
-                , ( "age", Dict.empty, int 5 )
+                , ( "address"
+                  , Dict.empty
+                  , object
+                        [ ( "city", Dict.empty, string "Seattle" )
+                        ]
+                  )
                 ]
           )
         ]
+        |> Debug.log ""
 
 
 nestedExampleAsString : String
@@ -124,7 +130,9 @@ nestedExampleAsString =
     """
 <person>
     <name>noah</name>
-    <age>5</age>
+    <address>
+        <city>Seattle</city>
+    </address>
 </person>
 """
         |> String.trim
